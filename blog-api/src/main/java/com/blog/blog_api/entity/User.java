@@ -2,6 +2,7 @@ package com.blog.blog_api.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jspecify.annotations.Nullable;
 
 //import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
@@ -28,6 +29,9 @@ public class User {
     @Column(nullable = false,unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     @Column(name ="created_at")
     private LocalDateTime createdAt;
 
@@ -46,6 +50,5 @@ public class User {
         this.createdAt = LocalDateTime.now();
 
     }
-
 
 }
