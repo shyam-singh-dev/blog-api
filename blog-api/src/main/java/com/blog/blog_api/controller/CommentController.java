@@ -5,6 +5,8 @@ import com.blog.blog_api.DTO.request.CommentRequest;
 import com.blog.blog_api.DTO.response.ApiResponse;
 import com.blog.blog_api.DTO.response.CommentResponse;
 import com.blog.blog_api.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comments")
+@Tag(name = "5. Comments", description = "Comment management APIs")
 public class CommentController {
 
     private final CommentService commentService;
@@ -23,6 +26,7 @@ public class CommentController {
     }
 
     // CREATE COMMENT on a post
+    @Operation(summary = "Add comment to a post")
     @PostMapping("/post/{postId}")
     public ResponseEntity<ApiResponse<CommentResponse>> createComment(
             @PathVariable Long postId,
@@ -37,6 +41,7 @@ public class CommentController {
     }
 
     // GET ALL COMMENTS ON A POST
+    @Operation(summary = "Get all comments on a post")
     @GetMapping("/post/{postId}")
     public ResponseEntity<ApiResponse<List<CommentResponse>>> getCommentsByPost(
             @PathVariable Long postId) {
@@ -47,6 +52,7 @@ public class CommentController {
     }
 
     // GET COMMENT BY ID
+    @Operation(summary = "Get comment by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CommentResponse>> getCommentById(
             @PathVariable Long id) {
@@ -69,6 +75,7 @@ public class CommentController {
     }
 
     // DELETE COMMENT
+    @Operation(summary = "Delete comment (owner only)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteComment(
             @PathVariable Long id,
@@ -80,6 +87,7 @@ public class CommentController {
     }
 
     // GET USER'S COMMENTS
+    @Operation(summary = "Get all comments by user")
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<CommentResponse>>> getCommentsByUser(
             @PathVariable Long userId) {

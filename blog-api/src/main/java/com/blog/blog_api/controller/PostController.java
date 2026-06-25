@@ -5,6 +5,8 @@ import com.blog.blog_api.DTO.request.PostRequest;
 import com.blog.blog_api.DTO.response.ApiResponse;
 import com.blog.blog_api.DTO.response.PostResponse;
 import com.blog.blog_api.service.PostService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
+@Tag(name = "4. Posts", description = "Blog post management APIs")
 public class PostController {
     private final PostService postService;
 
@@ -23,6 +26,7 @@ public class PostController {
     }
 
     // CREATE POST
+    @Operation(summary = "Create new post")
     @PostMapping
     public ResponseEntity<ApiResponse<PostResponse>> createPost(
             @RequestParam Long userId,
@@ -35,6 +39,7 @@ public class PostController {
     }
 
     // GET ALL POSTS (Paginated)
+    @Operation(summary = "Get all posts (paginated)")
     @GetMapping
     public ResponseEntity<ApiResponse<Page<PostResponse>>> getAllPosts(
             @RequestParam(defaultValue = "0") int page,
@@ -48,6 +53,7 @@ public class PostController {
 
     // GET POST BY ID
     @GetMapping("/{id}")
+    @Operation(summary = "Get post by ID")
     public ResponseEntity<ApiResponse<PostResponse>> getPostById(
             @PathVariable Long id) {
         PostResponse post = postService.getPostById(id);
@@ -57,6 +63,7 @@ public class PostController {
 
     // UPDATE POST
     @PutMapping("/{id}")
+    @Operation(summary = "Update post (owner only)")
     public ResponseEntity<ApiResponse<PostResponse>> updatePost(
             @PathVariable Long id,
             @RequestParam Long userId,
@@ -68,6 +75,7 @@ public class PostController {
     }
 
     // DELETE POST
+    @Operation(summary = "Delete post (owner only)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deletePost(
             @PathVariable Long id,
@@ -79,6 +87,7 @@ public class PostController {
     }
 
     // GET POSTS BY USER
+    @Operation(summary = "Get posts by user")
     @GetMapping("/user/{userId}")
     public ResponseEntity<ApiResponse<List<PostResponse>>> getPostsByUser(
             @PathVariable Long userId) {
@@ -89,6 +98,7 @@ public class PostController {
     }
 
     // GET POSTS BY CATEGORY
+    @Operation(summary = "Get posts by category (paginated)")
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ApiResponse<Page<PostResponse>>> getPostsByCategory(
             @PathVariable Long categoryId,
@@ -102,6 +112,7 @@ public class PostController {
     }
 
     // SEARCH POSTS
+    @Operation(summary = "Search posts by keyword")
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<Page<PostResponse>>> searchPosts(
             @RequestParam String keyword,
@@ -114,6 +125,7 @@ public class PostController {
     }
 
     // LIKE POST
+    @Operation(summary = "Like a post")
     @PostMapping("/{id}/like")
     public ResponseEntity<ApiResponse<PostResponse>> likePost(
             @PathVariable Long id) {
@@ -124,6 +136,7 @@ public class PostController {
     }
 
     // GET TRENDING POSTS
+    @Operation(summary = "Get trending posts (most liked)")
     @GetMapping("/trending")
     public ResponseEntity<ApiResponse<Page<PostResponse>>> getTrendingPosts(
             @RequestParam(defaultValue = "0") int page,

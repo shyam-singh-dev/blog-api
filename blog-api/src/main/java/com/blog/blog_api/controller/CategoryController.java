@@ -5,6 +5,8 @@ import com.blog.blog_api.DTO.request.CategoryRequest;
 import com.blog.blog_api.DTO.response.ApiResponse;
 import com.blog.blog_api.DTO.response.CategoryResponse;
 import com.blog.blog_api.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "3. Categories", description = "Category management APIs")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -21,6 +24,7 @@ public class CategoryController {
     }
 
     // CREATE
+    @Operation(summary = "Create new category")
     @PostMapping
     public ResponseEntity<ApiResponse<CategoryResponse>> createCategory(
             @Valid @RequestBody CategoryRequest request ) {
@@ -31,6 +35,7 @@ public class CategoryController {
     }
 
     // GET BY ID
+    @Operation(summary = "Get categories by Id")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<CategoryResponse>> getCategoryById(
             @PathVariable Long id ) {
@@ -41,6 +46,7 @@ public class CategoryController {
 
     // UPDATE
     @PutMapping("/{id}")
+    @Operation(summary = "Update category")
     public ResponseEntity<ApiResponse<CategoryResponse>> updateCategory(
             @PathVariable Long id,@Valid @RequestBody CategoryRequest request) {
         CategoryResponse category = categoryService.updateCategory(id, request);
@@ -49,7 +55,7 @@ public class CategoryController {
     }
 
     // DELETE
-
+    @Operation(summary = "Delete category")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteCategory(
             @PathVariable Long id) {
