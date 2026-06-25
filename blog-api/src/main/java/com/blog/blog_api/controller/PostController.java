@@ -123,4 +123,14 @@ public class PostController {
                 ApiResponse.success("Post liked", post));
     }
 
+    // GET TRENDING POSTS
+    @GetMapping("/trending")
+    public ResponseEntity<ApiResponse<Page<PostResponse>>> getTrendingPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<PostResponse> posts = postService.getTrendingPosts(page, size);
+        return ResponseEntity.ok(
+                ApiResponse.success("Trending posts fetched", posts));
+    }
     }

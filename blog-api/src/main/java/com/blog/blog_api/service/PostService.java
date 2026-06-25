@@ -156,6 +156,13 @@ public class PostService {
         return toResponse(updated);
     }
 
+    // TRENDING POSTS (most liked)
+    public Page<PostResponse> getTrendingPosts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Post> posts = postRepository.findTrendingPosts(pageable);
+        return posts.map(this::toResponse);
+    }
+
 
     // HELPER: Entity → DTO
     private PostResponse toResponse(Post post) {
